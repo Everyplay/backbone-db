@@ -1,5 +1,7 @@
 # Backbone DB
 
+[![Build Status](https://travis-ci.org/Everyplay/backbone-db.png?branch=master)](https://travis-ci.org/Everyplay/backbone-db)
+
 Backbone database interface and in-process reference implementation
 
 ### api
