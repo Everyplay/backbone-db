@@ -5,10 +5,6 @@ Backbone database interface and in-process reference implementation
 ### api
 
 ```js
-var DB = function DB(name) {
-  this.name = name;
-};
-
 /** the interface of the backbone-db exported module. 
   * It invokes the correct DB interface methods on this or this.db
   * backbone-db .sync delegates CREATE, READ, UPDATE and DELETE to this interface
