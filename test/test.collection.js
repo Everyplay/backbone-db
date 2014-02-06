@@ -107,7 +107,7 @@ module.exports = function (cb) {
       success: function () {
         var at0 = collection.at(0);
         assert.equal(collection.length, 1);
-        assert.equal(at0.get(at0.idAttribute), m3.get(m3.idAttribute));
+        assert.ok(""+at0.get(at0.idAttribute) === ""+m3.get(m3.idAttribute));
         t();
       },
       error: function (err) {
@@ -122,7 +122,7 @@ module.exports = function (cb) {
       limit: 2,
       after_id: m2.get(m2.idAttribute),
       success: function () {
-        assert.equal(collection.at(0).get(collection.at(0).idAttribute), m3.get(m3.idAttribute));
+        assert.equal(""+collection.at(0).get(collection.at(0).idAttribute), ""+m3.get(m3.idAttribute));
         assert.equal(collection.length, 1);
         t();
       },
@@ -140,8 +140,8 @@ module.exports = function (cb) {
       success: function () {
         var at0 = collection.at(0);
         var at1 = collection.at(1);
-        assert.equal(at0.get(at0.idAttribute), m1.get(m1.idAttribute));
-        assert.equal(at1.get(at0.idAttribute), m2.get(m1.idAttribute));
+        assert.equal(""+at0.get(at0.idAttribute), ""+m1.get(m1.idAttribute));
+        assert.equal(""+at1.get(at0.idAttribute), ""+m2.get(m1.idAttribute));
         t();
       },
       error: function (err) {

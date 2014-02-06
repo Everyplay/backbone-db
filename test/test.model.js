@@ -5,7 +5,6 @@ var Backbone = require('backbone');
 
 module.exports = function (cb) {
   after(function () {
-
     if (cb) cb();
   });
 
@@ -15,8 +14,9 @@ module.exports = function (cb) {
       success: function () {
         t();
       },
-      error: function () {
+      error: function (err) {
         // so we get error
+        t(err);
       }
     });
   });
