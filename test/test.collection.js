@@ -1,10 +1,7 @@
-var Db = require('../');
 var assert = require('assert');
-var _ = require('lodash');
-var Backbone = require('backbone');
 
 module.exports = function (cb) {
-  var m1, m2, m3, m4;
+  var m1, m2, m3;
   after(function () {
     if (cb) cb();
   });
@@ -13,7 +10,7 @@ module.exports = function (cb) {
     var m = new this.Collection();
     m.fetch({
       success: function () {
-        assert(m.length === 0, "Collection should be empty");
+        assert(m.length === 0, 'Collection should be empty');
         t();
       },
       error: function (err) {
@@ -26,14 +23,14 @@ module.exports = function (cb) {
     var m = new this.Collection();
     assert(m.length === 0);
     m.create({
-      "test": 1
+      'test': 1
     }, {
       success: function (model) {
-        assert(model.get("test") === 1);
+        assert(model.get('test') === 1);
         m1 = model;
         m.fetch({
           success: function () {
-            assert(m.length === 1, "Collection shuld have 1 model");
+            assert(m.length === 1, 'Collection shuld have 1 model');
             t();
           },
           error: function (err) {
@@ -66,7 +63,7 @@ module.exports = function (cb) {
             m3 = model;
             m.fetch({
               success: function () {
-                assert(m.length === 3, "Collection shuld have 3 model");
+                assert(m.length === 3, 'Collection shuld have 3 model');
                 t();
               },
               error: function (err) {
@@ -107,7 +104,7 @@ module.exports = function (cb) {
       success: function () {
         var at0 = collection.at(0);
         assert.equal(collection.length, 1);
-        assert.ok(""+at0.get(at0.idAttribute) === ""+m3.get(m3.idAttribute));
+        assert.ok(''+at0.get(at0.idAttribute) === ''+m3.get(m3.idAttribute));
         t();
       },
       error: function (err) {
@@ -122,7 +119,7 @@ module.exports = function (cb) {
       limit: 2,
       after_id: m2.get(m2.idAttribute),
       success: function () {
-        assert.equal(""+collection.at(0).get(collection.at(0).idAttribute), ""+m3.get(m3.idAttribute));
+        assert.equal(''+collection.at(0).get(collection.at(0).idAttribute), ''+m3.get(m3.idAttribute));
         assert.equal(collection.length, 1);
         t();
       },
@@ -140,8 +137,8 @@ module.exports = function (cb) {
       success: function () {
         var at0 = collection.at(0);
         var at1 = collection.at(1);
-        assert.equal(""+at0.get(at0.idAttribute), ""+m1.get(m1.idAttribute));
-        assert.equal(""+at1.get(at0.idAttribute), ""+m2.get(m1.idAttribute));
+        assert.equal(''+at0.get(at0.idAttribute), ''+m1.get(m1.idAttribute));
+        assert.equal(''+at1.get(at0.idAttribute), ''+m2.get(m1.idAttribute));
         t();
       },
       error: function (err) {
