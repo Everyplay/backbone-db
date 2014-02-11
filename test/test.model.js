@@ -1,9 +1,7 @@
-var Db = require('../');
 var assert = require('assert');
-var _ = require('lodash');
-var Backbone = require('backbone');
 
 module.exports = function (cb) {
+  var m;
   after(function () {
     if (cb) cb();
   });
@@ -23,21 +21,19 @@ module.exports = function (cb) {
 
   it('should include all the variables when saving a Model', function (t) {
     var Model = this.Model;
-    var m = new Model({
-      id: 1
-    });
+    m = new Model();
     m.save({
-      variable: "123",
+      variable: '123',
       counter: 1
     }, {
       success: function () {
         var m2 = new Model({
-          id: 1
+          id: m.get(m.idAttribute)
         });
         m2.fetch({
           success: function () {
-            assert.equal(m2.get("variable"), "123");
-            assert.equal(m2.get("counter"), 1);
+            assert.equal(m2.get('variable'), '123');
+            assert.equal(m2.get('counter'), 1);
             t();
           },
           error: function (err) {
@@ -50,8 +46,8 @@ module.exports = function (cb) {
   });
 
   it('should inc Model counter', function (t) {
-    var m = new this.Model({
-      id: 1
+    var m2 = new this.Model({
+      id: m.get(m.idAttribute)
     });
     var opts = {
       inc: {
@@ -66,17 +62,17 @@ module.exports = function (cb) {
         assert.ok(false);
       }
     };
-    m.save(null, opts);
+    m2.save(null, opts);
   });
 
   it('should check that counter was incresed', function (t) {
     var m2 = new this.Model({
-      id: 1
+      id: m.get(m.idAttribute)
     });
     m2.fetch({
       success: function () {
-        assert.equal(m2.get("variable"), "123");
-        assert.equal(m2.get("counter"), 3);
+        assert.equal(m2.get('variable'), '123');
+        assert.equal(m2.get('counter'), 3);
         t();
       },
       error: function (err) {
@@ -87,8 +83,8 @@ module.exports = function (cb) {
   });
 
   it('should fail inc operation gracefully', function (t) {
-    var m = new this.Model({
-      id: 2
+    var m2 = new this.Model({
+      id: m.get(m.idAttribute)+'asd'
     });
     var opts = {
       inc: {
@@ -96,7 +92,7 @@ module.exports = function (cb) {
         amount: 1
       },
       ignoreFailures: true,
-      success: function (model) {
+      success: function () {
         t();
       },
       error: function (model, err) {
@@ -104,18 +100,18 @@ module.exports = function (cb) {
         assert.ok(false);
       }
     };
-    m.save(null, opts);
+    m2.save(null, opts);
   });
 
   it('should remove the model', function (t) {
     var m2 = new this.Model({
-      id: 1
+      id: m.get(m.idAttribute)
     });
 
     m2.fetch({
       success: function () {
-        assert.equal(m2.get("variable"), "123");
-        assert.equal(m2.get("counter"), 3);
+        assert.equal(m2.get('variable'), '123');
+        assert.equal(m2.get('counter'), 3);
         m2.destroy({
           success: function () {
             t();

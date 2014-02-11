@@ -245,7 +245,7 @@ module.exports = function (cb) {
         assert(m.length === 3);
         var model = m.at(2);
         model.destroy({
-          success: function (model, response) {
+          success: function () {
             assert(m.length === 2, 'model was not removed from collection');
             m.fetch({
               success: function () {
@@ -257,7 +257,7 @@ module.exports = function (cb) {
               }
             });
           },
-          error: function () {
+          error: function (err) {
             assert(err);
           },
           wait: true
