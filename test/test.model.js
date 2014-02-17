@@ -140,4 +140,20 @@ module.exports = function (cb) {
       }
     });
   });
+
+  it('should give error if trying to destroy non-existent model', function(t) {
+    var m2 = new this.Model({
+      id: m.get(m.idAttribute)
+    });
+
+    m2.destroy({
+      success: function () {
+        t(new Error('should not succeed destroying non-existent model'));
+      },
+      error: function (model, err) {
+        assert.equal(err.message, 'not found');
+        t();
+      }
+    });
+  });
 };
