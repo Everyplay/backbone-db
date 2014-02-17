@@ -124,4 +124,20 @@ module.exports = function (cb) {
       }
     });
   });
+
+  it('should not fetch removed model', function(t) {
+    var m2 = new this.Model({
+      id: m.get(m.idAttribute)
+    });
+
+    m2.fetch({
+      success: function () {
+        assert.ok(false);
+      },
+      error: function (model, err) {
+        assert.equal(err.message, 'not found');
+        t();
+      }
+    });
+  });
 };
