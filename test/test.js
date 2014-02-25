@@ -1,6 +1,7 @@
 var Db = require('../');
 var Backbone = require('backbone');
 var _ = require('lodash');
+
 describe('backbone-db', function () {
   before(function () {
     this.db = new Db('mymodels');

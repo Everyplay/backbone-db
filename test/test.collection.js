@@ -13,8 +13,8 @@ module.exports = function (cb) {
         assert(m.length === 0, 'Collection should be empty');
         t();
       },
-      error: function (err) {
-        t(err);
+      error: function (collection, err) {
+        t();
       }
     });
   });
@@ -66,18 +66,18 @@ module.exports = function (cb) {
                 assert(m.length === 3, 'Collection shuld have 3 model');
                 t();
               },
-              error: function (err) {
-                assert(err);
+              error: function (model, err) {
+                t(err);
               }
             });
           },
-          error: function (err) {
-            assert(err);
+          error: function (model, err) {
+            t(err);
           }
         });
       },
-      error: function (err) {
-        assert(err);
+      error: function (model, err) {
+        t(err);
       }
     });
   });
@@ -90,8 +90,8 @@ module.exports = function (cb) {
         assert.equal(collection.length, 2);
         t();
       },
-      error: function (err) {
-        assert(err);
+      error: function (coll, err) {
+        t(err);
       }
     });
   });
@@ -107,8 +107,8 @@ module.exports = function (cb) {
         assert.ok(''+at0.get(at0.idAttribute) === ''+m3.get(m3.idAttribute));
         t();
       },
-      error: function (err) {
-        assert(err);
+      error: function (coll, err) {
+        t(err);
       }
     });
   });
@@ -123,8 +123,8 @@ module.exports = function (cb) {
         assert.equal(collection.length, 1);
         t();
       },
-      error: function (err) {
-        assert(err);
+      error: function (coll, err) {
+        t(err);
       }
     });
   });
@@ -141,8 +141,8 @@ module.exports = function (cb) {
         assert.equal(''+at1.get(at0.idAttribute), ''+m2.get(m1.idAttribute));
         t();
       },
-      error: function (err) {
-        assert(err);
+      error: function (coll, err) {
+        t(err);
       }
     });
   });
@@ -155,8 +155,8 @@ module.exports = function (cb) {
         assert.equal(collection.at(0).get('test'), 2);
         t();
       },
-      error: function (err) {
-        assert(err);
+      error: function (coll, err) {
+        t(err);
       }
     });
   });
@@ -172,8 +172,8 @@ module.exports = function (cb) {
         assert.equal(collection.at(0).get('test'), 2);
         t();
       },
-      error: function (err) {
-        assert(err);
+      error: function (coll, err) {
+        t(err);
       }
     });
   });
@@ -191,8 +191,8 @@ module.exports = function (cb) {
         assert.equal(collection.at(0).get('test'), 1);
         t();
       },
-      error: function (err) {
-        assert(err);
+      error: function (coll, err) {
+        t(err);
       }
     });
   });
@@ -210,8 +210,8 @@ module.exports = function (cb) {
         assert.equal(collection.at(0).get('test'), 1);
         t();
       },
-      error: function (err) {
-        assert(err);
+      error: function (coll, err) {
+        t(err);
       }
     });
   });
@@ -229,8 +229,8 @@ module.exports = function (cb) {
         assert.equal(collection.at(0).get('test'), 2);
         t();
       },
-      error: function (err) {
-        assert(err);
+      error: function (coll, err) {
+        t(err);
       }
     });
   });
@@ -249,19 +249,19 @@ module.exports = function (cb) {
                 assert(m.length === 2, 'model was not removed from collection when fetched');
                 t();
               },
-              error: function (err) {
-                assert(err);
+              error: function (model, err) {
+                t(err);
               }
             });
           },
-          error: function (err) {
-            assert(err);
+          error: function (model, err) {
+            t(err);
           },
           wait: true
         });
       },
-      error: function (err) {
-        assert(err);
+      error: function (coll, err) {
+        t(err);
       }
     });
   });

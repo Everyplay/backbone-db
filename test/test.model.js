@@ -6,14 +6,13 @@ module.exports = function (cb) {
     if (cb) cb();
   });
 
-  it('should .find from store', function (t) {
+  it('should not .find empty model from store', function (t) {
     var m = new this.Model({});
     m.fetch({
       success: function () {
         t();
       },
-      error: function (err) {
-        // so we get error
+      error: function (model, err) {
         t(err);
       }
     });
@@ -36,7 +35,7 @@ module.exports = function (cb) {
             assert.equal(m2.get('counter'), 1);
             t();
           },
-          error: function (err) {
+          error: function (model, err) {
             console.error(err);
             assert.ok(false);
           }
@@ -75,9 +74,8 @@ module.exports = function (cb) {
         assert.equal(m2.get('counter'), 3);
         t();
       },
-      error: function (err) {
-        console.error(err);
-        assert.ok(false);
+      error: function (model, err) {
+        t(err);
       }
     });
   });
@@ -96,8 +94,7 @@ module.exports = function (cb) {
         t();
       },
       error: function (model, err) {
-        console.error('ERR', err);
-        assert.ok(false);
+        t(err);
       }
     };
     m2.save(null, opts);
@@ -118,9 +115,8 @@ module.exports = function (cb) {
           }
         });
       },
-      error: function (err) {
-        console.error(err);
-        assert.ok(false);
+      error: function (model, err) {
+        t(err);
       }
     });
   });
