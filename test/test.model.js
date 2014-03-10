@@ -10,10 +10,10 @@ module.exports = function (cb) {
     var m = new this.Model({});
     m.fetch({
       success: function () {
-        t();
+        t(new Error('should no success'));
       },
       error: function (model, err) {
-        t(err);
+        t();
       }
     });
   });
