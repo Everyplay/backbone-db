@@ -152,4 +152,17 @@ module.exports = function (cb) {
       }
     });
   });
+
+  it('should support custom createId function', function(t) {
+    var NM = this.Model.extend({
+      createId: function(cb) {
+        cb(null, 'test_id');
+      }
+    });
+    var m = new NM();
+    m.save(null, {success: function() {
+      assert.equal(m.id, 'test_id');
+      t();
+    }});
+  });
 };
