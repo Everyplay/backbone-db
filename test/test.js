@@ -27,20 +27,20 @@ describe('backbone-db', function () {
 
 
   describe('Model', function () {
-    require('./test.model.js')();
     after(function () {
       this.db = new Db('mymodels');
       this.Collection.prototype.db = this.db;
       this.Model.prototype.db = this.db;
     });
+    require('./test.model.js')();
   });
 
   describe('Collection', function () {
-    require('./test.collection.js')();
     after(function () {
       this.db = new Db('mymodels');
       this.Collection.prototype.db = this.db;
       this.Model.prototype.db = this.db;
     });
+    require('./test.collection.js')();
   });
 });

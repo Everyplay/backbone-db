@@ -44,6 +44,31 @@ module.exports = function (cb) {
     });
   });
 
+  it('should allow updating model', function (t) {
+    var Model = this.Model;
+    m.save({
+      update: 'test'
+    }, {
+      success: function () {
+        var m2 = new Model({
+          id: m.id
+        });
+        m2.fetch({
+          success: function () {
+            assert.equal(m2.get('update'), 'test');
+            assert.equal(m2.get('counter'), 1);
+            t();
+          },
+          error: function (model, err) {
+            console.error(err);
+            assert.ok(false);
+          }
+        });
+      }
+    });
+  });
+
+
   it('should inc Model counter', function (t) {
     var m2 = new this.Model({
       id: m.get(m.idAttribute)
