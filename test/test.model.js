@@ -189,5 +189,38 @@ module.exports = function (cb) {
       assert.equal(m.id, 'test_id');
       t();
     }});
+
+  });
+  it('should properly succeeed and fail when using index fetch', function(t) {
+    var Indexed = this.Model.extend({
+      type: 'indexed',
+      indexes: [
+        {property: 'some_id'}
+      ]
+    });
+    var m = new Indexed({test:'ok',some_id:10});
+    m.save(null, {
+      success: function() {
+        var m2 = new Indexed({some_id:11});
+        m2.fetch({
+          success: function() {
+            assert.ok(false, 'fetch should not succeed');
+          },
+          error: function(model, err) {
+            assert.equal(err.message, 'not found');
+            var m3 = new Indexed({some_id:10});
+            m3.fetch({
+              error: t,
+              success: function() {
+                assert.equal(m3.get('test'), m.get('test'));
+                t();
+              }
+            });
+          }
+        });
+      },
+      error: t
+    });
+
   });
 };
