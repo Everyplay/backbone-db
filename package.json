@@ -1,6 +1,6 @@
 {
   "name": "backbone-db",
-  "version": "0.4.18",
+  "version": "0.4.19",
   "description": "Key-Value database storage interface, localStorage and in-process implementations",
   "main": "index.js",
   "scripts": {
