@@ -52,12 +52,14 @@ module.exports = function(cb) {
     assert(m.length === 0);
     m.create({
       test: 1,
-      arr: ['foo', 'bar']
+      arr: ['foo', 'bar'],
+      d: new Date()
     }, {
       success: function(model) {
         m2 = model;
         m.create({
-          test: 2
+          test: 2,
+          d: new Date()
         }, {
           success: function(model) {
             m3 = model;
@@ -242,6 +244,24 @@ module.exports = function(cb) {
       success: function() {
         assert.equal(collection.length, 1);
         assert.equal(collection.at(0).get('test'), 2);
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+    });
+  });
+
+  it('should query models with Date & $lte', function(t) {
+    var collection = new this.Collection();
+    collection.fetch({
+      where: {
+        d: {
+          $lte: new Date()
+        }
+      },
+      success: function() {
+        assert.equal(collection.length, 2);
         t();
       },
       error: function(coll, err) {
