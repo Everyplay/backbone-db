@@ -156,7 +156,7 @@ module.exports = function (cb) {
         assert.ok(false);
       },
       error: function (model, err) {
-        assert.equal(err.message, 'not found');
+        assert.equal(err.statusCode, 404);
         t();
       }
     });
@@ -172,7 +172,7 @@ module.exports = function (cb) {
         t(new Error('should not succeed destroying non-existent model'));
       },
       error: function (model, err) {
-        assert.equal(err.message, 'not found');
+        assert.equal(err.statusCode, 404);
         t();
       }
     });
@@ -207,7 +207,7 @@ module.exports = function (cb) {
             assert.ok(false, 'fetch should not succeed');
           },
           error: function(model, err) {
-            assert.equal(err.message, 'not found');
+            assert.equal(err.statusCode, 404);
             var m3 = new Indexed({some_id:10});
             m3.fetch({
               error: t,
