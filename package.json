@@ -1,15 +1,15 @@
 {
   "name": "backbone-db",
-  "version": "0.4.25",
-  "description": "Key-Value database storage interface, localStorage and in-process implementations",
+  "version": "0.5.0",
+  "description": "Backbone.js database storage interface",
   "main": "index.js",
   "scripts": {
     "test": "make test"
   },
-  "author": {
-    "name": "nomon",
-    "email": "matti@applifier.com"
-  },
+  "contributors": [
+    "Nomon <matti@applifier.com>",
+    "mikkolehtinen <mikkol@unity3d.com"
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/Everyplay/backbone-db.git"
@@ -24,7 +24,8 @@
     "backbone": "~1.1.0",
     "debug": "~0.8",
     "jsonquery": "~0.1.3",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "pff": "~0.1.1"
   },
   "devDependencies": {
     "mocha": "~1.18",
