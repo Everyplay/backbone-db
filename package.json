@@ -1,6 +1,6 @@
 {
   "name": "backbone-db",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Backbone.js database storage interface",
   "main": "index.js",
   "scripts": {
