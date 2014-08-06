@@ -1,5 +1,5 @@
 var Db = require('../');
-var Backbone = require('backbone');
+var Backbone = require('backdash');
 var _ = require('lodash');
 var assert = require('assert');
 
