@@ -1,4 +1,4 @@
-var Db = require('../');
+var Db = require('../lib/db');
 var Backbone = require('backbone');
 var _ = require('lodash');
 
