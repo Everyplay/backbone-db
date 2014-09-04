@@ -18,6 +18,18 @@ module.exports = function (cb) {
     });
   });
 
+  it('should not succeed index-fetching from an empty store', function (t) {
+    var m = new this.IndexedModel({ some_id: 1 });
+    m.fetch({
+      success: function () {
+        t(new Error('should not succeed'));
+      },
+      error: function (model, err) {
+        t();
+      }
+    });
+  });
+
   it('should include all the variables when saving a Model', function (t) {
     var Model = this.Model;
     m = new Model();
@@ -192,12 +204,7 @@ module.exports = function (cb) {
 
   });
   it('should properly succeeed and fail when using index fetch', function(t) {
-    var Indexed = this.Model.extend({
-      type: 'indexed',
-      indexes: [
-        {property: 'some_id'}
-      ]
-    });
+    var Indexed = this.IndexedModel;
     var m = new Indexed({test:'ok',some_id:10});
     m.save(null, {
       success: function() {

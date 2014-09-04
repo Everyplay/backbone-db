@@ -1,4 +1,4 @@
-var Db = require('../');
+var Db = require('../lib/db');
 var Backbone = require('backbone');
 var _ = require('lodash');
 
@@ -14,6 +14,12 @@ describe('backbone-db', function () {
       },
       db: this.db,
       sync: this.db.sync
+    });
+    this.IndexedModel = this.Model.extend({
+      type: 'indexed',
+      indexes: [
+        {property: 'some_id'}
+      ]
     });
     this.Collection = Backbone.Collection.extend({
       url: function () {
