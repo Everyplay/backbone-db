@@ -292,6 +292,22 @@ module.exports = function(cb) {
     });
   });
 
+  it('should fetch collection with after_id (first) & limit when sorted descending', function(t) {
+    var collection = new this.Collection();
+    collection.fetch({
+      sort: ['-id'],
+      limit: 1,
+      after_id: sortedCollection.at(0).id,
+      success: function() {
+        assert.equal(collection.length, 1);
+        assert.equal(collection.at(0).id, sortedCollection.at(1).id);
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+    });
+  });
   it('should fetch collection with before_id when sorted descending', function(t) {
     var collection = new this.Collection();
     collection.fetch({
@@ -318,6 +334,23 @@ module.exports = function(cb) {
         assert.equal(collection.length, 2);
         assert.equal(collection.at(0).id, sortedCollection.at(0).id);
         assert.equal(collection.at(1).id, sortedCollection.at(1).id);
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+    });
+  });
+
+  it('should fetch collection with before_id (last) & limit when sorted descending', function(t) {
+    var collection = new this.Collection();
+    collection.fetch({
+      sort: ['-id'],
+      before_id: sortedCollection.at(2).id,
+      limit: 1,
+      success: function() {
+        assert.equal(collection.length, 1);
+        assert.equal(collection.at(0).id, sortedCollection.at(1).id);
         t();
       },
       error: function(coll, err) {
