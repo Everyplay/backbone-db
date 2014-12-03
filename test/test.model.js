@@ -19,6 +19,7 @@ module.exports = function (cb) {
   });
 
   it('should not succeed index-fetching from an empty store', function (t) {
+    if (!this.IndexedModel) return t();
     var m = new this.IndexedModel({ some_id: 1 });
     m.fetch({
       success: function () {
@@ -204,6 +205,7 @@ module.exports = function (cb) {
 
   });
   it('should properly succeeed and fail when using index fetch', function(t) {
+    if (!this.IndexedModel) return t();
     var Indexed = this.IndexedModel;
     var m = new Indexed({test:'ok',some_id:10});
     m.save(null, {

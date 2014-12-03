@@ -2,6 +2,9 @@ var assert = require('assert');
 
 module.exports = function(cb) {
   var m1, m2, m3;
+  var sortedCollection;
+  var currentId;
+
   after(function() {
     if (cb) cb();
   });
@@ -84,6 +87,20 @@ module.exports = function(cb) {
     });
   });
 
+  it('should fetch collection', function(t) {
+    var collection = new this.Collection();
+    collection.fetch({
+      success: function() {
+        assert.equal(collection.length, 3);
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+
+    });
+  });
+
   it('should fetch collection with limit', function(t) {
     var collection = new this.Collection();
     collection.fetch({
@@ -115,14 +132,12 @@ module.exports = function(cb) {
     });
   });
 
-  it('should fetch collection with after_id', function(t) {
-    var collection = new this.Collection();
-    collection.fetch({
-      limit: 2,
-      after_id: m2.get(m2.idAttribute),
+  it('should fetch collection sorted ascending', function(t) {
+    sortedCollection = new this.Collection();
+    sortedCollection.fetch({
+      sort: 'id',
       success: function() {
-        assert.equal('' + collection.at(0).get(collection.at(0).idAttribute), '' + m3.get(m3.idAttribute));
-        assert.equal(collection.length, 1);
+        currentId = sortedCollection.at(1).id;
         t();
       },
       error: function(coll, err) {
@@ -131,16 +146,68 @@ module.exports = function(cb) {
     });
   });
 
-  it('should fetch collection with before_id', function(t) {
+  it('should fetch collection with after_id when sorting ascending', function(t) {
     var collection = new this.Collection();
     collection.fetch({
       limit: 2,
-      before_id: m3.get(m3.idAttribute),
+      sort: 'id',
+      after_id: currentId,
       success: function() {
-        var at0 = collection.at(0);
-        var at1 = collection.at(1);
-        assert.equal('' + at0.get(at0.idAttribute), '' + m1.get(m1.idAttribute));
-        assert.equal('' + at1.get(at0.idAttribute), '' + m2.get(m1.idAttribute));
+        assert.equal(collection.length, 1);
+        assert.equal(collection.at(0).id, sortedCollection.at(2).id);
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+    });
+  });
+
+  it('should fetch collection with after_id when sorting ascending with first id', function(t) {
+    var collection = new this.Collection();
+    collection.fetch({
+      limit: 2,
+      sort: 'id',
+      after_id: sortedCollection.at(0).id,
+      success: function() {
+        assert.equal(collection.length, 2);
+        assert.equal(collection.at(0).id, sortedCollection.at(1).id);
+        assert.equal(collection.at(1).id, sortedCollection.at(2).id);
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+    });
+  });
+
+  it('should fetch collection with before_id when sorting ascending', function(t) {
+    var collection = new this.Collection();
+    collection.fetch({
+      limit: 2,
+      sort: 'id',
+      before_id: currentId,
+      success: function() {
+        assert.equal(collection.length, 1);
+        assert.equal(collection.at(0).id, sortedCollection.at(0).id);
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+    });
+  });
+
+  it('should fetch collection with before_id when sorting ascending with last id', function(t) {
+    var collection = new this.Collection();
+    collection.fetch({
+      limit: 2,
+      sort: 'id',
+      before_id: sortedCollection.at(2).id,
+      success: function() {
+        assert.equal(collection.length, 2);
+        assert.equal(collection.at(0).id, sortedCollection.at(0).id);
+        assert.equal(collection.at(1).id, sortedCollection.at(1).id);
         t();
       },
       error: function(coll, err) {
@@ -177,6 +244,87 @@ module.exports = function(cb) {
     });
   });
 
+  it('should fetch collection sorted descending', function(t) {
+    sortedCollection = new this.Collection();
+    sortedCollection.fetch({
+      sort: ['-id'],
+      success: function() {
+        currentId = sortedCollection.at(1).id;
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+    });
+  });
+
+  it('should fetch collection with after_id when sorted descending', function(t) {
+    var collection = new this.Collection();
+    collection.fetch({
+      sort: ['-id'],
+      after_id: currentId,
+      limit: 1,
+      success: function() {
+        assert.equal(collection.length, 1);
+        assert.equal(collection.at(0).id, sortedCollection.at(2).id);
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+    });
+  });
+
+  it('should fetch collection with after_id (first) when sorted descending', function(t) {
+    var collection = new this.Collection();
+    collection.fetch({
+      sort: ['-id'],
+      after_id: sortedCollection.at(0).id,
+      success: function() {
+        assert.equal(collection.length, 2);
+        assert.equal(collection.at(0).id, sortedCollection.at(1).id);
+        assert.equal(collection.at(1).id, sortedCollection.at(2).id);
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+    });
+  });
+
+  it('should fetch collection with before_id when sorted descending', function(t) {
+    var collection = new this.Collection();
+    collection.fetch({
+      sort: ['-id'],
+      before_id: currentId,
+      limit: 1,
+      success: function() {
+        assert.equal(collection.length, 1);
+        assert.equal(collection.at(0).id, sortedCollection.at(0).id);
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+    });
+  });
+
+  it('should fetch collection with before_id (last) when sorted descending', function(t) {
+    var collection = new this.Collection();
+    collection.fetch({
+      sort: ['-id'],
+      before_id: sortedCollection.at(2).id,
+      success: function() {
+        assert.equal(collection.length, 2);
+        assert.equal(collection.at(0).id, sortedCollection.at(0).id);
+        assert.equal(collection.at(1).id, sortedCollection.at(1).id);
+        t();
+      },
+      error: function(coll, err) {
+        t(err);
+      }
+    });
+  });
 
   it('should fetch collection filtered with given attributes', function(t) {
     var collection = new this.Collection();
