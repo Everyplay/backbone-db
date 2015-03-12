@@ -14,7 +14,8 @@ module.exports = function (cb) {
         t(new Error('should no success'));
       },
       error: function (model, err) {
-        t(err);
+        assert(err);
+        t();
       }
     });
   });
