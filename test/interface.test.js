@@ -1,6 +1,4 @@
 var Db = require('../');
-var Backbone = require('backdash');
-var _ = require('lodash');
 var assert = require('assert');
 
 describe('backbone-db interface tests', function () {

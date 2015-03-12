@@ -2,31 +2,32 @@ var assert = require('assert');
 
 module.exports = function (cb) {
   var m;
+
   after(function () {
     if (cb) cb();
   });
 
   it('should not .find empty model from store', function (t) {
-    var m = new this.Model({});
+    m = new this.Model({});
     m.fetch({
       success: function () {
         t(new Error('should no success'));
       },
       error: function (model, err) {
-        t();
+        t(err);
       }
     });
   });
 
   it('should not succeed index-fetching from an empty store', function (t) {
     if (!this.IndexedModel) return t();
-    var m = new this.IndexedModel({ some_id: 1 });
+    m = new this.IndexedModel({ some_id: 1 });
     m.fetch({
       success: function () {
         t(new Error('should not succeed'));
       },
       error: function (model, err) {
-        t();
+        t(err);
       }
     });
   });
@@ -49,8 +50,8 @@ module.exports = function (cb) {
             t();
           },
           error: function (model, err) {
-            console.error(err);
             assert.ok(false);
+            t(err);
           }
         });
       }
@@ -73,8 +74,8 @@ module.exports = function (cb) {
             t();
           },
           error: function (model, err) {
-            console.error(err);
             assert.ok(false);
+            t(err);
           }
         });
       }
@@ -95,8 +96,8 @@ module.exports = function (cb) {
         t();
       },
       error: function (model, err) {
-        console.error(err);
         assert.ok(false);
+        t(err);
       }
     };
     m2.save(null, opts);
@@ -120,7 +121,7 @@ module.exports = function (cb) {
 
   it('should fail inc operation gracefully', function (t) {
     var m2 = new this.Model({
-      id: m.get(m.idAttribute)+'asd'
+      id: m.get(m.idAttribute) + 'asd'
     });
     var opts = {
       inc: {
@@ -193,31 +194,34 @@ module.exports = function (cb) {
 
   it('should support custom createId function', function(t) {
     var NM = this.Model.extend({
-      createId: function(cb) {
-        cb(null, 'test_id');
+      createId: function(_cb) {
+        _cb(null, 'test_id');
       }
     });
-    var m = new NM();
+    m = new NM();
     m.save(null, {success: function() {
       assert.equal(m.id, 'test_id');
       t();
     }});
-
   });
+
   it('should properly succeeed and fail when using index fetch', function(t) {
     if (!this.IndexedModel) return t();
     var Indexed = this.IndexedModel;
-    var m = new Indexed({test:'ok',some_id:10});
+    m = new Indexed({
+      test: 'ok',
+      some_id: 10
+    });
     m.save(null, {
       success: function() {
-        var m2 = new Indexed({some_id:11});
+        var m2 = new Indexed({some_id: 11});
         m2.fetch({
           success: function() {
             assert.ok(false, 'fetch should not succeed');
           },
           error: function(model, err) {
             assert.equal(err.statusCode, 404);
-            var m3 = new Indexed({some_id:10});
+            var m3 = new Indexed({some_id: 10});
             m3.fetch({
               error: t,
               success: function() {

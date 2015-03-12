@@ -1,6 +1,5 @@
 var Db = require('../lib/db');
 var Backbone = require('backbone');
-var _ = require('lodash');
 
 describe('backbone-db', function () {
   before(function () {

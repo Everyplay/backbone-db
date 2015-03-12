@@ -10,10 +10,7 @@ MOCHA-OPTS = --reporter $(REPORTER) \
 		--recursive \
 		--colors
 
-test: jshint
+test:
 	@NODE_ENV=$(ENV) $(BIN)/mocha \
 		$(MOCHA-OPTS) test/interface.test.js
 .PHONY: test
-
-jshint:
-	@$(BIN)/jshint $(SRC_FILES)

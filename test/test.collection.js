@@ -1,6 +1,7 @@
 var assert = require('assert');
 
 module.exports = function(cb) {
+  /*eslint no-unused-vars: 0*/
   var m1, m2, m3;
   var sortedCollection;
   var currentId;
@@ -17,7 +18,7 @@ module.exports = function(cb) {
         t();
       },
       error: function(collection, err) {
-        t();
+        t(err);
       }
     });
   });
@@ -48,8 +49,6 @@ module.exports = function(cb) {
     });
   });
 
-
-
   it('should .create 2 models', function(t) {
     var m = new this.Collection();
     assert(m.length === 0);
@@ -64,19 +63,19 @@ module.exports = function(cb) {
           test: 2,
           d: new Date()
         }, {
-          success: function(model) {
-            m3 = model;
+          success: function(_model) {
+            m3 = _model;
             m.fetch({
               success: function() {
                 assert(m.length === 3, 'Collection shuld have 3 model');
                 t();
               },
-              error: function(model, err) {
+              error: function(__model, err) {
                 t(err);
               }
             });
           },
-          error: function(model, err) {
+          error: function(_model, err) {
             t(err);
           }
         });
@@ -465,12 +464,12 @@ module.exports = function(cb) {
                 assert(m.length === 2, 'model was not removed from collection when fetched');
                 t();
               },
-              error: function(model, err) {
+              error: function(_model, err) {
                 t(err);
               }
             });
           },
-          error: function(model, err) {
+          error: function(_model, err) {
             t(err);
           },
           wait: true
