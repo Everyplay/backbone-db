@@ -1,6 +1,6 @@
 {
   "name": "backbone-db",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Backbone.js database storage interface",
   "main": "index.js",
   "scripts": {
@@ -28,10 +28,8 @@
     "pff": "^0.2.0"
   },
   "devDependencies": {
-    "chai": "~1.9",
-    "coveralls": "~2.7.0",
+    "chai": "^2.1.1",
     "eslint": "^0.16.2",
-    "istanbul": "~0.2.4",
     "mocha": "^1.21.3"
   },
   "readmeFilename": "Readme.md",
